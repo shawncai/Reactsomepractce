@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
-import { Input, Button, List } from 'antd';
-
-
-const data = [
-    'Racing car sprays burning fuel into crowd.',
-    'Japanese princess to wed commoner.',
-    'Australian walks 100km after outback crash.',
-    'Man charged over missing wedding girl.',
-    'Los Angeles battles huge wildfires.',
-];
+import store from './store'
+import { getInputChangeAction, getAddItemAction, getDeleteitemAction } from './store/actionCreators'
+import TodoListUI from './TodoListUI'
 
 class TodoList extends Component {
+    constructor(props) {
+        super(props)
+        this.state = store.getState()
+        this.handleInputchange = this.handleInputchange.bind(this)
+        this.handleStoreChange = this.handleStoreChange.bind(this)
+        this.handleBtnclick = this.handleBtnclick.bind(this)
+        this.handledelete = this.handledelete.bind(this)
+        store.subscribe(this.handleStoreChange)
+    }
     render() {
-        return (
-            <div>
-                <div style={{ margin: '20px' }}>
-                    <Input placeholder="to dolist" style={{ width: '300px' }} />
-                    <Button type="primary" style={{ marginLeft: '20px' }}>提交</Button>
-                </div>
-                <List
-                style={{width: '300px', margin: '20px'}}
-                    size="small"
-                    bordered
-                    dataSource={data}
-                    renderItem={item => <List.Item>{item}</List.Item>}
-                />
-            </div>
-        )
+        return <TodoListUI
+                 inputValue={this.state.inputValue}
+                 list={this.state.list}
+                 handleInputchange={this.handleInputchange}
+                 handleBtnclick={this.handleBtnclick}
+                 handledelete={this.handledelete}
+                 />
+    }
+
+    handledelete(e) {
+        const action = getDeleteitemAction(e)
+        store.dispatch(action)
+    }
+
+    handleBtnclick() {
+        const action = getAddItemAction()
+        store.dispatch(action)
+    }
+
+    handleInputchange(e) {
+        e.persist()
+        const action = getInputChangeAction(e.target.value)
+        store.dispatch(action)
+    }
+
+    handleStoreChange() {
+        this.setState(store.getState())
     }
 }
 
