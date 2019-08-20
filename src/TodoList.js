@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import store from './store'
-import { getInputChangeAction, getAddItemAction, getDeleteitemAction } from './store/actionCreators'
+import { getInputChangeAction, getAddItemAction, getDeleteitemAction, getTodoList } from './store/actionCreators'
 import TodoListUI from './TodoListUI'
 
 class TodoList extends Component {
@@ -21,6 +21,11 @@ class TodoList extends Component {
                  handleBtnclick={this.handleBtnclick}
                  handledelete={this.handledelete}
                  />
+    }
+
+    componentDidMount () {
+        const action = getTodoList()
+        store.dispatch(action)
     }
 
     handledelete(e) {
