@@ -20,10 +20,11 @@
     "axios": "^0.18.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-redux": "^5.0.7",
+    "react-redux": "^5.1.1",
     "react-scripts": "1.1.5",
     "react-transition-group": "^4.2.2",
     "redux": "^4.0.4",
+    "redux-saga": "^1.0.5",
     "redux-thunk": "^2.3.0",
     "save": "^2.4.0"
   }
